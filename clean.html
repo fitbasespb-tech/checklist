@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Чек-лист запуска Fitbase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#3C67D6;
+  --blue-2:#2A4FBF;
+  --blue-10:#E8EEFB;
+  --blue-20:#D2DDF7;
+  --blue-50:#7E9AE3;
+  --ink:#0E1320;
+  --muted:#5B6478;
+  --line:#E5E9F2;
+  --canvas:#F6F8FC;
+  --gold:#F4A82C;
+  --green:#1FB872;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-family:'Golos Text',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+
+/* Top control bar — скрывается при печати */
+.bar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;gap:16px;justify-content:space-between;}
+.bar-l{display:flex;align-items:center;gap:12px;}
+.bar-logo{font-weight:800;font-size:18px;letter-spacing:-.01em;}
+.bar-logo span{color:var(--blue);}
+.bar-sub{color:var(--muted);font-size:13px;}
+.bar-r{display:flex;align-items:center;gap:10px;}
+.toggle{display:inline-flex;background:var(--canvas);border-radius:999px;padding:4px;border:1px solid var(--line);}
+.toggle button{border:0;background:transparent;padding:8px 16px;font:inherit;font-weight:600;color:var(--muted);border-radius:999px;cursor:pointer;font-size:13px;}
+.toggle button.on{background:var(--blue);color:#fff;}
+.print-btn{border:0;background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font:inherit;font-weight:600;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.print-btn:hover{background:var(--blue);}
+
+.book{max-width:840px;margin:0 auto;padding:24px 16px 80px;}
+
+/* Cover */
+.page{background:#fff;border-radius:24px;box-shadow:0 1px 0 var(--line), 0 24px 60px -30px rgba(20,30,60,.18);padding:56px 56px 64px;margin:0 0 28px;position:relative;overflow:hidden;}
+.cover{padding:80px 56px 88px;background:linear-gradient(135deg,#fff 0%,#F2F6FD 100%);}
+.cover::before{content:"";position:absolute;right:-80px;top:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--blue-10) 0%,transparent 70%);}
+.cover-tag{display:inline-flex;align-items:center;gap:8px;background:var(--blue-10);color:var(--blue-2);font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;}
+.cover h1{font-size:54px;line-height:1.05;letter-spacing:-.02em;margin:18px 0 14px;font-weight:800;}
+.cover h1 em{font-style:normal;font-family:'Caveat',cursive;color:var(--blue);font-weight:700;font-size:1.05em;}
+.cover-lead{font-size:18px;color:var(--muted);max-width:560px;}
+.cover-meta{display:flex;gap:28px;margin-top:32px;flex-wrap:wrap;}
+.cover-meta div{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 18px;min-width:160px;}
+.cover-meta b{display:block;font-size:22px;color:var(--blue);font-weight:800;}
+.cover-meta span{font-size:13px;color:var(--muted);}
+
+.toc{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;}
+.toc a{display:flex;justify-content:space-between;align-items:center;color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--line);padding:10px 0;font-weight:500;font-size:15px;}
+.toc a:hover{color:var(--blue);}
+.toc a b{color:var(--blue);font-family:'Caveat',cursive;font-size:24px;font-weight:700;}
+
+/* Role page */
+.role{page-break-before:always;}
+.role-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:32px;gap:24px;}
+.role-num{font-family:'Caveat',cursive;font-size:90px;line-height:.85;color:var(--blue);font-weight:700;}
+.role-title{flex:1;}
+.role-tag{display:inline-block;background:var(--blue);color:#fff;font-weight:600;font-size:12px;padding:4px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.04em;text-transform:uppercase;}
+.role-title h2{margin:0;font-size:36px;letter-spacing:-.015em;font-weight:800;line-height:1.05;}
+.role-title p{margin:6px 0 0;color:var(--muted);font-size:15px;}
+
+.block{margin:0 0 28px;}
+.block-h{display:flex;align-items:center;gap:12px;margin:0 0 14px;}
+.block-h .dot{width:32px;height:32px;border-radius:50%;background:var(--blue-10);color:var(--blue-2);font-weight:800;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.block-h h3{margin:0;font-size:20px;font-weight:700;letter-spacing:-.01em;}
+
+.items{margin:0;padding:0;list-style:none;display:grid;gap:8px;}
+.item{display:flex;align-items:flex-start;gap:14px;padding:12px 14px;border-radius:12px;background:var(--canvas);border:1px solid transparent;transition:.15s;}
+.item:hover{border-color:var(--blue-20);background:#fff;}
+.chk{flex-shrink:0;width:22px;height:22px;border:2px solid var(--blue-50);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:#fff;margin-top:1px;}
+.chk svg{width:14px;height:14px;color:var(--blue);opacity:0;}
+.item-body{flex:1;min-width:0;}
+.item-text{font-size:14.5px;color:var(--ink);font-weight:500;}
+.item-sub{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:4px;}
+.item-sub li{font-size:14px;color:var(--muted);padding-left:14px;position:relative;}
+.item-sub li::before{content:"—";position:absolute;left:0;color:var(--blue-50);}
+
+/* Links mode */
+.with-links .item{cursor:pointer;}
+.with-links .item-link{display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-weight:600;text-decoration:none;border-bottom:1.5px dashed var(--blue-20);}
+.with-links .item-link:hover{border-bottom-style:solid;color:var(--blue-2);}
+.with-links .item-link::after{content:"↗";font-size:12px;opacity:.7;}
+.no-links .item-link{color:var(--ink);font-weight:500;border:0;cursor:default;pointer-events:none;}
+.no-links .item-link::after{display:none;}
+
+/* Bonus item */
+.bonus{margin-top:10px;background:linear-gradient(135deg,#FFF7E6,#FFEFCC);border:1.5px solid #FFE0A1;border-radius:14px;padding:14px 18px;}
+.bonus-h{display:flex;align-items:center;gap:8px;font-weight:700;color:#9C6A00;margin:0 0 8px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;}
+.bonus-h::before{content:"⭐";font-size:14px;}
+.bonus-list{margin:0;padding:0;list-style:none;display:grid;gap:6px;}
+.bonus-list li{font-size:14.5px;color:#7A5300;font-weight:500;}
+
+/* Tech readiness — special */
+.tech .item{background:#F0FBF6;}
+.tech .chk{border-color:var(--green);}
+.tech .chk svg{color:var(--green);}
+.tech .item:hover{background:#fff;border-color:#A6E5C4;}
+
+/* Footer of every role page */
+.role-foot{margin-top:36px;padding-top:18px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;}
+.role-foot a{color:var(--blue);text-decoration:none;font-weight:600;}
+
+/* Note about manager */
+.help-banner{background:var(--blue-10);border-radius:14px;padding:14px 18px;display:flex;gap:12px;align-items:center;margin:16px 0 28px;}
+.help-banner b{color:var(--blue-2);}
+.help-banner-icon{width:32px;height:32px;background:var(--blue);color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+
+/* Print */
+@media print{
+  body{background:#fff;}
+  .bar{display:none !important;}
+  .book{max-width:none;padding:0;margin:0;}
+  .page{box-shadow:none;border-radius:0;margin:0;padding:30mm 22mm;page-break-inside:avoid;}
+  .cover{padding:35mm 22mm;}
+  .role{page-break-before:always;}
+  .item:hover{border-color:transparent;background:var(--canvas);}
+  a{color:var(--blue) !important;}
+  @page{size:A4;margin:0;}
+}
+
+/* Mobile */
+@media (max-width:680px){
+  .bar{padding:10px 14px;gap:8px;}
+  .bar-sub{display:none;}
+  .toggle button{padding:6px 10px;font-size:12px;}
+  .print-btn{padding:8px 12px;font-size:12px;}
+  .book{padding:14px 10px 60px;}
+  .page{padding:32px 22px;border-radius:18px;}
+  .cover{padding:40px 22px 52px;}
+  .cover h1{font-size:36px;}
+  .cover-lead{font-size:16px;}
+  .toc{grid-template-columns:1fr;}
+  .role-head{flex-direction:column-reverse;align-items:flex-start;gap:8px;}
+  .role-num{font-size:56px;}
+  .role-title h2{font-size:24px;}
+  .cover-meta{gap:10px;}
+  .cover-meta div{min-width:0;flex:1;padding:10px 14px;}
+  .cover-meta b{font-size:18px;}
+  .help-banner{padding:12px 14px;font-size:13px;}
+  .block-h h3{font-size:17px;}
+  .item{padding:10px 12px;gap:10px;}
+  .item-text{font-size:14px;}
+  .item-sub li{font-size:13px;}
+}
+
+/* Active checkbox (click to mark) */
+.item.checked .chk{background:var(--blue);border-color:var(--blue);}
+.item.checked .chk svg{opacity:1;color:#fff;}
+.item.checked .item-text{color:var(--muted);text-decoration:line-through;}
+</style>
+</head>
+<body class="with-links">
+
+<div class="bar">
+  <div class="bar-l">
+    <div class="bar-logo">Fit<span>base</span></div>
+    <div class="bar-sub">Чек-лист запуска для клиента</div>
+  </div>
+  <div class="bar-r">
+    <div class="toggle" role="tablist">
+      <button id="modeLinks" class="on" onclick="setMode('links')">Со ссылками</button>
+      <button id="modeClean" onclick="setMode('clean')">Без ссылок</button>
+    </div>
+    <button class="print-btn" onclick="window.print()">Скачать PDF</button>
+  </div>
+</div>
+
+<div class="book">
+
+<!-- COVER -->
+<section class="page cover">
+  <div class="cover-tag">Внедрение Fitbase</div>
+  <h1>Чек-лист <em>запуска</em><br/>фитнес-клуба или студии</h1>
+  <p class="cover-lead">Пройдите все блоки по своей роли, протестируйте ключевые сценарии — и вы готовы к запуску. На каждый пункт есть статья в Базе знаний или вопрос менеджеру.</p>
+
+  <div class="cover-meta">
+    <div><b>6</b><span>ролей в команде</span></div>
+    <div><b>2–3</b><span>недели на запуск</span></div>
+    <div><b>9–21</b><span>работает поддержка</span></div>
+  </div>
+
+  <nav class="toc">
+    <a href="#admin"><span>Администратор</span><b>01</b></a>
+    <a href="#client"><span>Клиент (пройти самим)</span><b>02</b></a>
+    <a href="#sales"><span>Менеджер по продажам</span><b>03</b></a>
+    <a href="#marketing"><span>Маркетолог</span><b>04</b></a>
+    <a href="#director"><span>Руководитель</span><b>05</b></a>
+    <a href="#tech"><span>Техническая готовность</span><b>06</b></a>
+  </nav>
+</section>
+
+<!-- 1. АДМИНИСТРАТОР -->
+<section class="page role" id="admin">
+  <div class="role-head">
+    <div class="role-title">
+      <span class="role-tag">Роль 01</span>
+      <h2>Путь администратора</h2>
+      <p>Ежедневная работа на ресепшене: клиенты, абонементы, расписание, продажи</p>
+    </div>
+    <div class="role-num">01</div>
+  </div>
+
+  <div class="help-banner">
+    <div class="help-banner-icon">?</div>
+    <div>Что-то непонятно — <b>пишите менеджеру</b>. Лучше уточнить сейчас, чем разбираться на старте работы с реальными клиентами.</div>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">1</span><h3>Работа с клиентом</h3></div>
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Создать нового тестового клиента из раздела:</div><ul class="item-sub"><li><a class="item-link" href="https://help.fitbase.io/article/3995" target="_blank">заявки</a></li><li><a class="item-link" href="https://help.fitbase.io/article/4904" target="_blank">клиенты</a></li><li><a class="item-link" href="https://help.fitbase.io/article/16704" target="_blank">занятие в расписании</a></li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/16704" target="_blank"><span class="item-text">Оставить комментарий в карточке клиента</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/20098" target="_blank"><span class="item-text">Поставить задачу на клиента</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/4905" target="_blank"><span class="item-text">Начислить бонусные баллы</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/22783" target="_blank"><span class="item-text">Добавить тег клиенту</span></a></div></li>
+    </ul>
+    <div class="bonus"><div class="bonus-h">Дополнительно</div><ul class="bonus-list"><li>Написать клиенту в мессенджер</li></ul></div>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">2</span><h3>Работа с абонементами</h3></div>
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/4906" target="_blank"><span class="item-text">Продать абонемент тестовому клиенту</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Отредактировать абонемент:</div><ul class="item-sub"><li>количество посещений</li><li>срок действия</li><li>количество заморозок</li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3822" target="_blank"><span class="item-text">Заморозить и разморозить абонемент</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3816" target="_blank"><span class="item-text">Сделать возврат</span></a></div></li>
+    </ul>
+    <div class="bonus"><div class="bonus-h">Дополнительно</div><ul class="bonus-list"><li>Провести внутреннюю рассрочку</li></ul></div>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">3</span><h3>Работа с расписанием</h3></div>
+    <p style="margin:-8px 0 12px;color:var(--muted);font-size:13px;font-style:italic;">Если проход через ресепшен — запустите клиента через ресепшен</p>
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3811" target="_blank"><span class="item-text">Записать клиента с активным абонементом в групповое занятие</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/6854" target="_blank"><span class="item-text">Поставить статус «Пришёл»</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/6854" target="_blank"><span class="item-text">Изменить статус клиента на «Отказался»</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3811" target="_blank"><span class="item-text">Записать клиента на другое занятие / другой день</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверить:</div><ul class="item-sub"><li>историю посещений клиента</li><li>записи клиента и статусы</li><li>корректное списание посещений</li></ul></div></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">4</span><h3>Работа с персональными тренировками</h3></div>
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/4902" target="_blank"><span class="item-text">Записать клиента на персональную тренировку</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5116" target="_blank"><span class="item-text">Провести оплату услуги</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/6854" target="_blank"><span class="item-text">Поставить статус «Пришёл» в занятии</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3807" target="_blank"><span class="item-text">Удалить запись и найти её в архиве</span></a></div></li>
+    </ul>
+    <div class="bonus"><div class="bonus-h">Дополнительно</div><ul class="bonus-list"><li>Оформить услугу на другого клиента</li></ul></div>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">5</span><h3>Работа с заявками</h3></div>
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5643" target="_blank"><span class="item-text">Переместить клиента на нужный этап воронки</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/16809" target="_blank"><span class="item-text">Переместить клиента в «Отказ» и выбрать причину</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/11124" target="_blank"><span class="item-text">Просмотреть аналитику заявок</span></a></div></li>
+    </ul>
+    <div class="bonus"><div class="bonus-h">Дополнительно</div><ul class="bonus-list"><li>Внести бюджет и тег у заявки</li></ul></div>
+  </div>
+
+  <div class="role-foot">
+    <span>Не нашли нужное в Базе знаний? <a href="https://help.fitbase.io/" target="_blank">help.fitbase.io</a></span>
+    <span>01 / 06</span>
+  </div>
+</section>
+
+<!-- 2. КЛИЕНТ -->
+<section class="page role" id="client">
+  <div class="role-head">
+    <div class="role-title">
+      <span class="role-tag">Роль 02</span>
+      <h2>Путь клиента</h2>
+      <p>Пройдите сами весь путь конечного клиента — через приложение и через виджет</p>
+    </div>
+    <div class="role-num">02</div>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">1</span><h3>Через мобильное приложение</h3></div>
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/10984" target="_blank"><span class="item-text">Скачать приложение</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3993" target="_blank"><span class="item-text">Авторизоваться</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/8048" target="_blank"><span class="item-text">Записаться на групповое занятие</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/8048" target="_blank"><span class="item-text">Записаться на персональную тренировку</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/8048" target="_blank"><span class="item-text">Отменить запись</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/8048" target="_blank"><span class="item-text">Попробовать приобрести абонемент</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/8048" target="_blank"><span class="item-text">Оставить отзыв о тренере</span></a></div></li>
+    </ul>
+    <div class="bonus" style="background:linear-gradient(135deg,#FFE6E6,#FFD2D2);border-color:#FFB8B8;"><div class="bonus-h" style="color:#A33;">❗ Важно</div><ul class="bonus-list" style="color:#7A2222;"><li>Если запись доступна только при наличии активного абонемента — предварительно продайте себе абонемент через CRM</li></ul></div>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">2</span><h3>Через виджет расписания и ЛК клиента</h3></div>
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3845" target="_blank"><span class="item-text">Записаться через виджет</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/10948" target="_blank"><span class="item-text">Войти в личный кабинет клиента</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/8048" target="_blank"><span class="item-text">Приобрести услугу / абонемент в магазине</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/10948" target="_blank"><span class="item-text">Отменить запись</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><span class="item-text">Проверить отображение активного абонемента</span></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><span class="item-text">Проверить историю записей</span></div></li>
+    </ul>
+  </div>
+
+  <div class="role-foot">
+    <span>База знаний для клиента: <a href="https://help.fitbase.io/article/10984" target="_blank">help.fitbase.io</a></span>
+    <span>02 / 06</span>
+  </div>
+</section>
+
+<!-- 3. МЕНЕДЖЕР ПО ПРОДАЖАМ -->
+<section class="page role" id="sales">
+  <div class="role-head">
+    <div class="role-title">
+      <span class="role-tag">Роль 03</span>
+      <h2>Путь менеджера по продажам</h2>
+      <p>Полный цикл работы с заявкой: от лида до продажи и задач после</p>
+    </div>
+    <div class="role-num">03</div>
+  </div>
+
+  <div class="block">
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3995" target="_blank"><span class="item-text">Создать новую заявку с указанием</span></a><ul class="item-sub"><li>рекламный источник</li><li>бюджет</li><li>тег заявки</li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3995" target="_blank"><span class="item-text">Создать нового клиента из этой заявки</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5643" target="_blank"><span class="item-text">Провести клиента по этапам воронки</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5116" target="_blank"><span class="item-text">Зафиксировать оплату на клиенте</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/20098" target="_blank"><span class="item-text">Поставить задачу</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/20099" target="_blank"><span class="item-text">Выполнить эту задачу</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3995" target="_blank"><span class="item-text">Обработать заявку из «Неразобранного» (если есть)</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3995" target="_blank"><span class="item-text">Привязать заявку без клиента к текущему клиенту</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/23894" target="_blank"><span class="item-text">Привязать чат ФБЧ к клиенту</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5643" target="_blank"><span class="item-text">Оставить комментарий в заявке</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/20099" target="_blank"><span class="item-text">Проверить список задач на сегодня</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Просмотреть отчёты:</div><ul class="item-sub"><li><a class="item-link" href="https://help.fitbase.io/article/12878" target="_blank">по продажам</a></li><li><a class="item-link" href="https://help.fitbase.io/article/11124" target="_blank">аналитика по заявкам</a></li></ul></div></li>
+    </ul>
+    <div class="bonus"><div class="bonus-h">Дополнительно</div><ul class="bonus-list"><li>Написать тестовому клиенту в мессенджер</li><li>Продлить текущий абонемент</li><li>Найти любого клиента по номеру / ФИО</li></ul></div>
+  </div>
+
+  <div class="role-foot">
+    <span>Воронка и заявки: <a href="https://help.fitbase.io/article/5643" target="_blank">help.fitbase.io</a></span>
+    <span>03 / 06</span>
+  </div>
+</section>
+
+<!-- 4. МАРКЕТОЛОГ -->
+<section class="page role" id="marketing">
+  <div class="role-head">
+    <div class="role-title">
+      <span class="role-tag">Роль 04</span>
+      <h2>Путь маркетолога</h2>
+      <p>Промокоды, рассылки, автоматизации, удержание и проверка отчётов</p>
+    </div>
+    <div class="role-num">04</div>
+  </div>
+
+  <div class="block">
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/16442" target="_blank"><span class="item-text">Создать промокод</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/21803" target="_blank"><span class="item-text">Создать скидку</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/21803" target="_blank"><span class="item-text">Настроить автоматическую скидку для группы клиентов</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/24068" target="_blank"><span class="item-text">Создать тестовую push-рассылку — отправить только себе</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/21505" target="_blank"><span class="item-text">Создать тестовую рассылку через ФБЧ — отправить только себе</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверить наличие автоматизаций для:</div><ul class="item-sub"><li><a class="item-link" href="https://help.fitbase.io/article/26863" target="_blank">потерянного клиента</a></li><li><a class="item-link" href="https://help.fitbase.io/article/26863" target="_blank">нового клиента</a></li><li><a class="item-link" href="https://help.fitbase.io/article/26863" target="_blank">напоминания об окончании абонемента</a></li><li><a class="item-link" href="https://help.fitbase.io/article/26863" target="_blank">кешбэка (если есть)</a></li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/4815" target="_blank"><span class="item-text">Проверить механику «Приведи друга» — отправить приглашение другу, убедиться что друг смог скачать приложение</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверить отображение в приложении:</div><ul class="item-sub"><li>акций</li><li>новостей</li><li>отзывов</li><li>баннеров</li><li>промокода при покупке абонемента / услуги</li><li>счёта (бонусы / депозит)</li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверить маркетинговые отчёты по:</div><ul class="item-sub"><li><a class="item-link" href="https://help.fitbase.io/article/11124" target="_blank">рассылкам</a></li><li><a class="item-link" href="https://help.fitbase.io/article/11124" target="_blank">автоматизациям</a></li><li><a class="item-link" href="https://help.fitbase.io/article/11124" target="_blank">промокодам</a></li><li><a class="item-link" href="https://help.fitbase.io/article/11124" target="_blank">бонусам</a></li></ul></div></li>
+    </ul>
+  </div>
+
+  <div class="role-foot">
+    <span>Маркетинг и удержание: <a href="https://help.fitbase.io/" target="_blank">help.fitbase.io</a></span>
+    <span>04 / 06</span>
+  </div>
+</section>
+
+<!-- 5. РУКОВОДИТЕЛЬ -->
+<section class="page role" id="director">
+  <div class="role-head">
+    <div class="role-title">
+      <span class="role-tag">Роль 05</span>
+      <h2>Путь руководителя</h2>
+      <p>Контроль клуба или студии через дашборды, отчёты и проверку ключевых процессов</p>
+    </div>
+    <div class="role-num">05</div>
+  </div>
+
+  <div class="block">
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5012" target="_blank"><span class="item-text">Изучить отчёты «Рабочего стола»</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверить:</div><ul class="item-sub"><li><a class="item-link" href="https://help.fitbase.io/article/12878" target="_blank">отчёты по продажам</a></li><li><a class="item-link" href="https://help.fitbase.io/article/5019" target="_blank">посещаемость клуба</a></li><li><a class="item-link" href="https://help.fitbase.io/article/5643" target="_blank">необработанные заявки</a></li><li><a class="item-link" href="https://help.fitbase.io/article/23894" target="_blank">неотвеченные сообщения в ФБЧ</a></li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5020" target="_blank"><span class="item-text">Проверить заполняемость занятий</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверить эффективность сотрудников:</div><ul class="item-sub"><li>тренеров</li><li>администраторов</li><li>менеджеров по продажам</li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/7885" target="_blank"><span class="item-text">Проверить продления абонементов</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/18313" target="_blank"><span class="item-text">Проверить работу автоматизаций</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверить корректность и функциональность:</div><ul class="item-sub"><li><a class="item-link" href="https://help.fitbase.io/article/10984" target="_blank">мобильного приложения клиента</a></li><li><a class="item-link" href="https://help.fitbase.io/article/10948" target="_blank">личного кабинета клиента</a></li><li><a class="item-link" href="https://help.fitbase.io/article/16705" target="_blank">приложения тренера</a></li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/11124" target="_blank"><span class="item-text">Проверить аналитику работы с заявками</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверить основные бизнес-процессы клуба:</div><ul class="item-sub"><li>запись клиента</li><li>проведение оплаты</li><li>списание посещений</li><li>возврат</li><li>расчёт зарплаты тренеров</li></ul></div></li>
+    </ul>
+    <div class="bonus"><div class="bonus-h">Дополнительно</div><ul class="bonus-list"><li>Проверить онлайн-оплаты и поступление ДС на счёт:</li><li style="padding-left:20px;">— через приложение</li><li style="padding-left:20px;">— через ЛК клиента в расписании</li><li style="padding-left:20px;">— по прямой ссылке через мессенджер</li></ul></div>
+  </div>
+
+  <div class="role-foot">
+    <span>Аналитика руководителю: <a href="https://help.fitbase.io/article/5012" target="_blank">help.fitbase.io</a></span>
+    <span>05 / 06</span>
+  </div>
+</section>
+
+<!-- 6. ТЕХНИЧЕСКАЯ ГОТОВНОСТЬ -->
+<section class="page role tech" id="tech">
+  <div class="role-head">
+    <div class="role-title">
+      <span class="role-tag" style="background:var(--green);">Финал 06</span>
+      <h2>Техническая готовность<br/>к запуску</h2>
+      <p>Финальная проверка перед стартом с реальными клиентами</p>
+    </div>
+    <div class="role-num" style="color:var(--green);">06</div>
+  </div>
+
+  <div class="block">
+    <ul class="items">
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/3993" target="_blank"><span class="item-text">Настроены все авторизации для входа в приложение / ЛК клиента</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5850" target="_blank"><span class="item-text">Создан расчёт зарплат для тренеров</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/23894" target="_blank"><span class="item-text">Подключены каналы в ФБЧ</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><span class="item-text">Проверена отправка сообщений клиенту</span></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/18605" target="_blank"><span class="item-text">Проверены права доступа сотрудников</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверены ссылки:</div><ul class="item-sub"><li>на оферту</li><li>на политику конфиденциальности</li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/category/1128" target="_blank"><span class="item-text">Проверены подключённые интеграции</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/23889" target="_blank"><span class="item-text">Работают онлайн-оплаты</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверена онлайн-запись через:</div><ul class="item-sub"><li><a class="item-link" href="https://help.fitbase.io/article/8048" target="_blank">приложение</a></li><li><a class="item-link" href="https://help.fitbase.io/article/3845" target="_blank">виджет расписания</a></li><li><a class="item-link" href="https://help.fitbase.io/article/10948" target="_blank">Личный кабинет клиента</a></li></ul></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><a class="item-link" href="https://help.fitbase.io/article/5020" target="_blank"><span class="item-text">Проверена корректность отображения расписания</span></a></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><span class="item-text">Проверены уведомления о записи / отмене занятия (для тренера)</span></div></li>
+      <li class="item"><span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><div class="item-body"><div class="item-text">Проверены автоматизации:</div><ul class="item-sub"><li>создание задач</li><li>перемещение по этапам воронок</li><li>отправка push / сообщений в мессенджеры</li><li>отправка push тренеру</li></ul></div></li>
+    </ul>
+  </div>
+
+  <div class="role-foot">
+    <span style="color:var(--green);font-weight:600;">✓ Готово к запуску</span>
+    <span>06 / 06</span>
+  </div>
+</section>
+
+</div>
+
+<script>
+function setMode(m){
+  const b=document.body;
+  if(m==='links'){b.classList.add('with-links');b.classList.remove('no-links');document.getElementById('modeLinks').classList.add('on');document.getElementById('modeClean').classList.remove('on');}
+  else{b.classList.add('no-links');b.classList.remove('with-links');document.getElementById('modeClean').classList.add('on');document.getElementById('modeLinks').classList.remove('on');}
+}
+document.querySelectorAll('.item').forEach(el=>{
+  el.addEventListener('click',e=>{
+    if(e.target.closest('a'))return;
+    el.classList.toggle('checked');
+  });
+});
+</script>
+</body>
+</html>
