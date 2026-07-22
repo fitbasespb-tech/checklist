@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Работа с CRM: заявки и задачи — Чек-лист Fitbase</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800;900&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#3C67D6;
+  --blue-2:#2A4FBF;
+  --blue-10:#E8EEFB;
+  --blue-20:#D2DDF7;
+  --blue-50:#7E9AE3;
+  --ink:#0E1320;
+  --muted:#5B6478;
+  --line:#E5E9F2;
+  --canvas:#F6F8FC;
+  --gold:#F4A82C;
+  --green:#1FB872;
+  --red:#E5484D;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-family:'Golos Text',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+
+.bar{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid var(--line);padding:12px 24px;display:flex;align-items:center;gap:16px;justify-content:space-between;}
+.bar-l{display:flex;align-items:center;gap:12px;}
+.bar-logo{font-weight:800;font-size:18px;letter-spacing:-.01em;}
+.bar-logo span{color:var(--blue);}
+.bar-sub{color:var(--muted);font-size:13px;}
+.bar-r{display:flex;align-items:center;gap:10px;}
+.toggle{display:inline-flex;background:var(--canvas);border-radius:999px;padding:4px;border:1px solid var(--line);}
+.toggle button{border:0;background:transparent;padding:8px 16px;font:inherit;font-weight:600;color:var(--muted);border-radius:999px;cursor:pointer;font-size:13px;}
+.toggle button.on{background:var(--blue);color:#fff;}
+.print-btn{border:0;background:var(--ink);color:#fff;padding:10px 18px;border-radius:999px;font:inherit;font-weight:600;font-size:13px;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.print-btn:hover{background:var(--blue);}
+
+.book{max-width:1200px;margin:0 auto;padding:24px 24px 80px;}
+
+.page{background:#fff;border-radius:24px;box-shadow:0 1px 0 var(--line), 0 24px 60px -30px rgba(20,30,60,.18);padding:56px 56px 64px;margin:0 0 28px;position:relative;overflow:hidden;}
+.cover{padding:80px 56px 88px;background:linear-gradient(135deg,#fff 0%,#F2F6FD 100%);}
+.cover::before{content:"";position:absolute;right:-80px;top:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--blue-10) 0%,transparent 70%);}
+.cover-tag{display:inline-flex;align-items:center;gap:8px;background:var(--blue-10);color:var(--blue-2);font-weight:600;font-size:13px;padding:8px 14px;border-radius:999px;}
+.cover h1{font-size:54px;line-height:1.05;letter-spacing:-.02em;margin:18px 0 14px;font-weight:800;}
+.cover h1 em{font-style:normal;font-family:'Caveat',cursive;color:var(--blue);font-weight:700;font-size:1.05em;}
+.cover-lead{font-size:18px;color:var(--muted);max-width:600px;}
+.cover-meta{display:flex;gap:28px;margin-top:32px;flex-wrap:wrap;}
+.cover-meta div{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:14px 18px;min-width:150px;}
+.cover-meta b{display:block;font-size:22px;color:var(--blue);font-weight:800;}
+.cover-meta span{font-size:13px;color:var(--muted);}
+
+.toc{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;}
+.toc a{display:flex;justify-content:space-between;align-items:center;color:var(--ink);text-decoration:none;border-bottom:1px dashed var(--line);padding:10px 0;font-weight:500;font-size:15px;gap:12px;}
+.toc a:hover{color:var(--blue);}
+.toc a span{min-width:0;}
+.toc a b{color:var(--blue);font-family:'Caveat',cursive;font-size:24px;font-weight:700;flex-shrink:0;}
+
+.role{page-break-before:always;}
+.role-head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:28px;gap:24px;}
+.role-num{font-family:'Caveat',cursive;font-size:90px;line-height:.85;color:var(--blue);font-weight:700;}
+.role-title{flex:1;}
+.role-tag{display:inline-block;background:var(--blue);color:#fff;font-weight:600;font-size:12px;padding:4px 10px;border-radius:999px;margin-bottom:10px;letter-spacing:.04em;text-transform:uppercase;}
+.role-title h2{margin:0;font-size:34px;letter-spacing:-.015em;font-weight:800;line-height:1.05;}
+.role-title p{margin:6px 0 0;color:var(--muted);font-size:15px;}
+
+.intro{background:var(--blue-10);border-radius:14px;padding:14px 18px;margin:0 0 26px;color:var(--blue-2);font-size:14.5px;}
+
+.block{margin:0 0 26px;}
+.block-h{display:flex;align-items:center;gap:12px;margin:0 0 14px;}
+.block-h .dot{width:32px;height:32px;border-radius:50%;background:var(--blue-10);color:var(--blue-2);font-weight:800;display:inline-flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.block-h h3{margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em;}
+
+.items{margin:0;padding:0;list-style:none;display:grid;gap:8px;}
+.item{display:flex;align-items:flex-start;gap:14px;padding:12px 14px;border-radius:12px;background:var(--canvas);border:1px solid transparent;transition:.15s;}
+.item:hover{border-color:var(--blue-20);background:#fff;}
+.chk{flex-shrink:0;width:22px;height:22px;border:2px solid var(--blue-50);border-radius:6px;display:inline-flex;align-items:center;justify-content:center;background:#fff;margin-top:1px;cursor:pointer;}
+.chk svg{width:14px;height:14px;color:var(--blue);opacity:0;}
+.item-body{flex:1;min-width:0;}
+.item-text{font-size:14.5px;color:var(--ink);font-weight:500;}
+.item-note{font-size:13px;color:var(--muted);margin-top:3px;}
+.item-sub{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:4px;}
+.item-sub li{font-size:14px;color:var(--muted);padding-left:14px;position:relative;}
+.item-sub li::before{content:"—";position:absolute;left:0;color:var(--blue-50);}
+
+/* Tariff pill */
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle;letter-spacing:.02em;}
+.tag.pro{background:#EEF3FF;color:var(--blue-2);border:1px solid var(--blue-20);}
+.tag.opt{background:#F1F3F7;color:var(--muted);border:1px solid var(--line);}
+
+/* Links mode */
+.with-links .item-link{display:inline-flex;align-items:center;gap:6px;color:var(--blue);font-weight:600;text-decoration:none;border-bottom:1.5px dashed var(--blue-20);}
+.with-links .item-link:hover{border-bottom-style:solid;color:var(--blue-2);}
+.with-links .item-link.arw::after{content:"↗";font-size:12px;opacity:.7;}
+.no-links .item-link{color:var(--ink);font-weight:500;border:0;cursor:default;pointer-events:none;}
+.no-links .item-link.arw::after{display:none;}
+
+/* Bonus / optional block */
+.bonus{margin-top:10px;background:linear-gradient(135deg,#FFF7E6,#FFEFCC);border:1.5px solid #FFE0A1;border-radius:14px;padding:14px 18px;}
+.bonus-h{display:flex;align-items:center;gap:8px;font-weight:700;color:#9C6A00;margin:0 0 8px;font-size:13px;letter-spacing:.04em;text-transform:uppercase;}
+.bonus-h::before{content:"⭐";font-size:14px;}
+.bonus-list{margin:0;padding:0;list-style:none;display:grid;gap:6px;}
+.bonus-list li{font-size:14.5px;color:#7A5300;font-weight:500;}
+.bonus-list a{color:#9C6A00;font-weight:700;text-decoration:underline;}
+
+/* Release-blocker warning */
+.warn{margin:8px 0 0;background:linear-gradient(135deg,#FFE9E9,#FFDCDC);border:1.5px solid #FFB3B3;border-radius:12px;padding:11px 15px;}
+.warn-h{display:flex;align-items:center;gap:7px;font-weight:700;color:#B02020;margin:0 0 4px;font-size:12px;letter-spacing:.03em;text-transform:uppercase;}
+.warn-h::before{content:"❗";}
+.warn p{margin:0;font-size:13.5px;color:#8A2222;}
+
+/* Ready-to-sell note */
+.done-note{margin:6px 0 0;background:#F0FBF6;border:1.5px solid #A6E5C4;border-radius:14px;padding:14px 18px;color:#12734A;font-weight:600;font-size:14.5px;display:flex;gap:10px;align-items:center;}
+.done-note::before{content:"✓";display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;flex-shrink:0;}
+
+.role-foot{margin-top:32px;padding-top:18px;border-top:1px dashed var(--line);display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;gap:12px;}
+.role-foot a{color:var(--blue);text-decoration:none;font-weight:600;}
+
+.help-banner{background:var(--blue-10);border-radius:14px;padding:14px 18px;display:flex;gap:12px;align-items:center;margin:0 0 26px;}
+.help-banner b{color:var(--blue-2);}
+.help-banner-icon{width:32px;height:32px;background:var(--blue);color:#fff;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+
+@media print{
+  body{background:#fff;}
+  .bar{display:none !important;}
+  .book{max-width:none;padding:0;margin:0;}
+  .page{box-shadow:none;border-radius:0;margin:0;padding:26mm 20mm;page-break-inside:avoid;}
+  .cover{padding:32mm 20mm;}
+  .role{page-break-before:always;}
+  .item:hover{border-color:transparent;background:var(--canvas);}
+  a{color:var(--blue) !important;}
+  @page{size:A4;margin:0;}
+}
+
+@media (max-width:680px){
+  .bar{padding:10px 14px;gap:8px;}
+  .bar-sub{display:none;}
+  .toggle button{padding:6px 10px;font-size:12px;}
+  .print-btn{padding:8px 12px;font-size:12px;}
+  .book{padding:14px 10px 60px;}
+  .page{padding:32px 22px;border-radius:18px;}
+  .cover{padding:40px 22px 52px;}
+  .cover h1{font-size:34px;}
+  .cover-lead{font-size:16px;}
+  .toc{grid-template-columns:1fr;}
+  .role-head{flex-direction:column-reverse;align-items:flex-start;gap:8px;}
+  .role-num{font-size:56px;}
+  .role-title h2{font-size:23px;}
+  .cover-meta{gap:10px;}
+  .cover-meta div{min-width:0;flex:1;padding:10px 14px;}
+  .cover-meta b{font-size:18px;}
+  .help-banner{padding:12px 14px;font-size:13px;}
+  .block-h h3{font-size:16px;}
+  .item{padding:10px 12px;gap:10px;}
+  .item-text{font-size:14px;}
+  .item-sub li{font-size:13px;}
+}
+
+.item.checked .chk{background:var(--blue);border-color:var(--blue);}
+.item.checked .chk svg{opacity:1;color:#fff;}
+.item.checked .item-text{color:var(--muted);text-decoration:line-through;}
+
+/* READINESS block on cover */
+.ready{margin-top:36px;background:linear-gradient(135deg,#0E1320 0%,#1B2746 60%,#243463 100%);color:#fff;border-radius:24px;padding:36px 40px;display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;position:relative;overflow:hidden;}
+.ready::before{content:"";position:absolute;right:-100px;bottom:-100px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(123,153,232,.25) 0%,transparent 70%);pointer-events:none;}
+.ready-ring{position:relative;width:160px;height:160px;flex-shrink:0;z-index:1;}
+.ready-ring svg{transform:rotate(-90deg);width:160px;height:160px;}
+.ready-ring circle{fill:none;stroke-width:12;}
+.ready-ring .bg{stroke:rgba(255,255,255,.12);}
+.ready-ring .fg{stroke:#6B91F0;stroke-linecap:round;stroke-dasharray:439.8;stroke-dashoffset:439.8;transition:stroke-dashoffset .6s cubic-bezier(.22,1,.36,1),stroke .3s;}
+.ready.done .ready-ring .fg{stroke:#3CD68B;}
+.ready-pct{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.ready-pct b{font-size:42px;font-weight:800;letter-spacing:-.02em;line-height:1;}
+.ready-pct span{font-size:12px;opacity:.7;text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
+.ready-text{z-index:1;min-width:0;}
+.ready-text h3{margin:0 0 10px;font-size:28px;line-height:1.1;letter-spacing:-.015em;font-weight:800;}
+.ready-text p{margin:0 0 16px;font-size:15px;opacity:.8;max-width:440px;}
+.ready-count{display:inline-flex;align-items:baseline;gap:10px;background:rgba(255,255,255,.1);padding:8px 16px;border-radius:999px;font-size:14px;font-weight:500;}
+.ready-count b{font-size:18px;font-weight:800;color:#6B91F0;}
+.ready.done .ready-count b{color:#3CD68B;}
+.ready-reset{margin-left:10px;background:transparent;border:1px solid rgba(255,255,255,.25);color:#fff;padding:7px 14px;border-radius:999px;font:inherit;font-size:12px;font-weight:600;cursor:pointer;}
+.ready-reset:hover{background:rgba(255,255,255,.1);}
+
+.mini-ready{display:inline-flex;align-items:center;gap:8px;background:var(--canvas);padding:6px 12px;border-radius:999px;border:1px solid var(--line);font-weight:700;font-size:13px;color:var(--ink);}
+.mini-ready-dot{width:8px;height:8px;border-radius:50%;background:var(--blue);}
+.mini-ready.done .mini-ready-dot{background:var(--green);}
+.mini-ready.done{color:var(--green);}
+
+.role-progress{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--blue);}
+.role-progress-bar{width:60px;height:6px;background:var(--line);border-radius:3px;overflow:hidden;}
+.role-progress-fill{height:100%;background:var(--blue);border-radius:3px;transition:width .4s;}
+
+/* === LAYOUT: sidebar menu + switchable views === */
+.layout{display:flex;gap:26px;align-items:flex-start;}
+.content{flex:1;min-width:0;}
+.content .page{margin-bottom:0;}
+.view{display:none;}
+.view.active{display:block;}
+
+.nav{position:sticky;top:84px;width:266px;flex-shrink:0;background:#fff;border:1px solid var(--line);border-radius:20px;padding:10px;box-shadow:0 1px 0 var(--line),0 20px 50px -34px rgba(20,30,60,.18);max-height:calc(100vh - 104px);overflow:auto;}
+.nav-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:8px 10px 6px;}
+.nav-item{display:flex;align-items:center;gap:11px;width:100%;text-align:left;border:0;background:transparent;padding:9px 10px;border-radius:12px;cursor:pointer;font:inherit;color:var(--ink);}
+.nav-item+.nav-item{margin-top:2px;}
+.nav-item:hover{background:var(--canvas);}
+.nav-item.active{background:var(--blue-10);}
+.nav-num{width:27px;height:27px;flex-shrink:0;border-radius:8px;background:var(--canvas);color:var(--muted);font-weight:800;font-size:12px;display:inline-flex;align-items:center;justify-content:center;}
+.nav-item.active .nav-num{background:var(--blue);color:#fff;}
+.nav-item.done .nav-num{background:var(--green);color:#fff;}
+.nav-main{flex:1;min-width:0;}
+.nav-label{display:block;font-size:13.5px;font-weight:600;line-height:1.22;}
+.nav-count{display:block;font-size:11.5px;color:var(--muted);margin-top:2px;}
+.nav-item.active .nav-label{color:var(--blue-2);}
+.nav-item.done .nav-count{color:var(--green);font-weight:600;}
+.nav-sep{height:1px;background:var(--line);margin:8px 6px;}
+.nav-home .nav-num{background:var(--ink);color:#fff;font-size:13px;}
+.nav-home.active .nav-num{background:var(--blue);}
+
+/* Focus mode — single block per link (?step=) */
+body.focus .nav{display:none;}
+body.focus .layout{display:block;}
+body.focus .content{max-width:840px;margin:0 auto;}
+body.focus .content .cover.view{display:none !important;}
+.focus-hint{display:none;}
+body.focus .focus-hint{display:flex;align-items:center;gap:8px;background:var(--blue-10);color:var(--blue-2);border-radius:12px;padding:11px 16px;margin:0 0 18px;font-size:13.5px;}
+body.focus .focus-hint::before{content:"🔗";}
+
+/* Home "start" button */
+.start-btn{margin-top:26px;display:inline-flex;align-items:center;gap:10px;background:var(--blue);color:#fff;border:0;padding:14px 24px;border-radius:999px;font:inherit;font-weight:700;font-size:15px;cursor:pointer;}
+.start-btn:hover{background:var(--blue-2);}
+.start-btn::after{content:"→";font-size:17px;}
+
+/* TOC cards become buttons */
+.toc button{display:flex;justify-content:space-between;align-items:center;color:var(--ink);border:1px solid var(--line);background:#fff;border-radius:14px;padding:12px 16px;font:inherit;font-weight:500;font-size:15px;cursor:pointer;text-align:left;gap:12px;transition:.15s;}
+.toc button:hover{border-color:var(--blue-20);color:var(--blue-2);background:var(--blue-10);}
+.toc button span{min-width:0;}
+.toc button b{color:var(--blue);font-family:'Caveat',cursive;font-size:24px;font-weight:700;flex-shrink:0;}
+
+@media (max-width:1024px){
+  .layout{flex-direction:column;gap:14px;}
+  .nav{position:sticky;top:56px;z-index:20;width:auto;max-height:none;overflow-x:auto;overflow-y:hidden;display:flex;gap:6px;padding:8px;border-radius:14px;-webkit-overflow-scrolling:touch;}
+  .nav-title{display:none;}
+  .nav-sep{display:none;}
+  .nav-item{flex-shrink:0;width:auto;gap:8px;padding:8px 12px;}
+  .nav-item+.nav-item{margin-top:0;}
+  .nav-label{white-space:nowrap;font-size:12.5px;}
+  .nav-count{display:none;}
+  .toc{grid-template-columns:1fr;}
+}
+
+@media print{.ready-reset, .mini-ready{display:none !important;}
+  .nav{display:none !important;}
+  .layout{display:block;}
+  .content .page{margin-bottom:0;}
+  .view{display:block !important;}
+  .role.view{page-break-before:always;}
+  .cover.view{page-break-after:always;}
+}
+@media (max-width:680px){
+  .ready{grid-template-columns:1fr;text-align:center;padding:28px 22px;gap:20px;justify-items:center;}
+  .ready-ring{width:130px;height:130px;}
+  .ready-ring svg{width:130px;height:130px;}
+  .ready-pct b{font-size:34px;}
+  .ready-text h3{font-size:22px;}
+  .mini-ready{font-size:11px;padding:4px 8px;gap:5px;}
+  .mini-ready .mr-label{display:none;}
+}
+</style>
+</head>
+<body class="with-links focus">
+
+<div class="bar">
+  <div class="bar-l">
+    <div class="bar-logo">Fit<span>base</span></div>
+    <div class="bar-sub">Блок 08 — Работа с CRM: заявки и задачи</div>
+  </div>
+  <div class="bar-r">
+    <div class="mini-ready" id="miniReady" title="Прогресс раздела"><span class="mini-ready-dot"></span><span class="mr-label">Блок 08</span> <span id="miniPct">0%</span></div>
+    <button class="print-btn" onclick="window.print()">Скачать PDF</button>
+  </div>
+</div>
+
+<div class="book">
+  <div class="content">
+    <div class="focus-hint">Это отдельный шаг настройки. Отметьте выполненные пункты — прогресс сохранится в вашем браузере.</div>
+    <section class="page role view active" id="crm">
+  <div class="role-head">
+    <div class="role-title">
+      <span class="role-tag">Блок 08</span>
+      <h2>Работа с CRM: заявки и задачи</h2>
+      <p>Обработка лидов от первого обращения до дальнейших действий</p>
+    </div>
+    <div class="role-num">08</div>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">1</span><h3>Заявки</h3></div>
+    <ul class="items">
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3995" target="_blank"><span class="item-text">Как работать с разделом «Заявки»</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/5643" target="_blank"><span class="item-text">Как настроить рекламные источники</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/16809" target="_blank"><span class="item-text">Создание причины отказа</span></a></div></li>
+      <li class="item"><div class="item-body">
+        <div class="item-text">Как принимать заявки из разных источников</div>
+        <ul class="item-sub">
+          <li><a class="item-link arw" href="https://help.fitbase.io/article/18157" target="_blank">парсер почты</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/article/14030" target="_blank">сбор заявок из ВК</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/article/27124" target="_blank">лиды из Facebook</a></li>
+        </ul>
+      </div></li>
+    </ul>
+  </div>
+
+  <div class="block">
+    <div class="block-h"><span class="dot">2</span><h3>Задачи</h3></div>
+    <ul class="items">
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/20094" target="_blank"><span class="item-text">Как создать задачи</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/20099" target="_blank"><span class="item-text">Работа с задачами</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/20097" target="_blank"><span class="item-text">Фильтры в разделе «Задачи»</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/25681" target="_blank"><span class="item-text">Результаты задач</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/18313" target="_blank"><span class="item-text">Автоматические задачи и автодействия</span></a></div></li>
+    </ul>
+  </div>
+
+  <div class="role-foot"><span>База знаний: <a href="https://help.fitbase.io/" target="_blank">help.fitbase.io</a></span><span class="role-foot-r"></span></div>
+</section>
+  </div>
+</div>
+
+<script>
+const CHK='<span class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>';
+document.querySelectorAll('.item').forEach(el=>el.insertAdjacentHTML('afterbegin',CHK));
+const items=Array.from(document.querySelectorAll('.item'));
+const STORE='fitbase_setup_crm';
+function save(){try{localStorage.setItem(STORE,JSON.stringify(items.map(e=>e.classList.contains('checked')?1:0)));}catch(e){}}
+function load(){try{const r=localStorage.getItem(STORE);if(!r)return;const a=JSON.parse(r);items.forEach((e,i)=>{if(a[i])e.classList.add('checked');});}catch(e){}}
+function upd(){
+  const t=items.length,d=items.filter(e=>e.classList.contains('checked')).length,p=t?Math.round(d/t*100):0;
+  const mp=document.getElementById('miniPct'); if(mp)mp.textContent=p+'%';
+  const mini=document.getElementById('miniReady'); if(mini)mini.classList.toggle('done',p===100);
+  const slot=document.querySelector('.role-foot-r');
+  if(slot)slot.innerHTML=`<span class="role-progress"><span>${d}/${t}</span><span class="role-progress-bar"><span class="role-progress-fill" style="width:${p}%;"></span></span><span>${p}%</span></span>`;
+}
+document.querySelectorAll('.item').forEach(el=>el.addEventListener('click',e=>{if(e.target.closest('a'))return;el.classList.toggle('checked');save();upd();}));
+load();upd();
+</script>
+
+</body>
+</html>
