@@ -43,7 +43,7 @@ __HEAD__
 
 <div class="bar">
   <div class="bar-l">
-    <div class="bar-logo">Fit<span>base</span></div>
+    <div class="bar-logo"><img src="/assets/logo-fitbase-transparent.png" alt="Fitbase" width="122" height="20"></div>
     <div class="bar-sub">__BARSUB__</div>
   </div>
   <div class="bar-r">
@@ -86,3 +86,4 @@ for bid, num in BLOCKS:
     print("  /setup/%s/  ->  %s" % (bid, name))
 
 print("Готово.")
+
