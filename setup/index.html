@@ -110,6 +110,12 @@ html,body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-fami
 .warn p{margin:0;font-size:13.5px;color:#A83A3A;}
 
 /* Ready-to-sell note */
+.tip{margin:8px 0 0;background:#EAF7F3;border:1.5px solid #A9E1D5;border-radius:12px;padding:11px 15px;}
+.tip-h{display:flex;align-items:center;gap:7px;font-weight:700;color:#147F68;margin:0 0 4px;font-size:12px;letter-spacing:.03em;text-transform:uppercase;}
+.tip-h::before{content:"📄";}
+.tip p{margin:0 0 6px;font-size:13.5px;color:#147F68;}
+.tip p:last-of-type{margin:0;}
+.tip a{color:#147F68;font-weight:700;text-decoration:underline;}
 .done-note{margin:6px 0 0;background:#EAF7F3;border:1.5px solid #A9E1D5;border-radius:14px;padding:14px 18px;color:#147F68;font-weight:600;font-size:14.5px;display:flex;gap:10px;align-items:center;}
 .done-note::before{content:"✓";display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;flex-shrink:0;}
 
@@ -360,23 +366,24 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <ul class="items">
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/13736" target="_blank"><span class="item-text">Шаг 1. Настройки юридического лица</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/start-legal" target="_blank"><span class="item-text">Шаг 1. Настройки юридического лица</span></a>
         <div class="item-note">Базовые реквизиты и налоговые параметры — для корректной работы продаж, отчётности и интеграции с кассой.<span class="tag opt">опционально</span></div>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/6839" target="_blank"><span class="item-text">Шаг 2. Настройки клуба</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/start-club-info" target="_blank"><span class="item-text">Шаг 2. Настройки клуба</span></a>
         <div class="item-note">Рабочие часы, описание вашего проекта и общие параметры.</div>
         <ul class="item-sub"><li>описание вашего проекта</li><li>ссылки на оферту</li><li>согласие на обработку персональных данных</li></ul>
         <div class="warn"><div class="warn-h">Блокирует релиз приложения</div><p>Без заполнения описания проекта, оферты и согласия на обработку ПД мобильное приложение не пройдёт ревью в Apple Store и RuStore.</p></div>
+        <div class="tip"><div class="tip-h">Юридический пакет для фитнес-студий</div><p>Нет оферты или политики обработки персональных данных — возьмите шаблоны из пакета: юрист собрал 27 готовых документов.</p><p>Эти документы защищают от штрафов, которые за одну ошибку доходят до 700 тыс. ₽. Внедрить пакет можно в любой момент — на старте или в уже работающей студии.</p><p><a href="https://disk.360.yandex.ru/d/hCBHPMId47TqqA" target="_blank">Скачать шаблоны →</a></p></div>
       </div></li>
 
       <li class="item"><div class="item-body">
         <div class="item-text">Шаг 3. Сотрудники и тренеры, выдача доступа</div>
         <div class="item-note">Добавьте свою команду и оформите карточки тренеров: регалии, фото, медиа.</div>
         <ul class="item-sub">
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/16443" target="_blank">создание сотрудников и доступов</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/20797" target="_blank">карточки тренеров — регалии и медиа</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/staff-add" target="_blank">создание сотрудников и доступов</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/staff-trainer-add" target="_blank">карточки тренеров — регалии и медиа</a></li>
         </ul>
         <div class="warn"><div class="warn-h">Блокирует релиз приложения</div><p>Без фото и описания тренеров мобильное приложение не пройдёт ревью в Apple Store и RuStore.</p></div>
       </div></li>
@@ -385,8 +392,11 @@ body.focus .focus-hint::before{content:"🔗";}
         <div class="item-text">Шаг 4. Подключение онлайн-оплат</div>
         <div class="item-note">Включите приём онлайн-платежей в приложении — оставьте заявку на подключение.</div>
         <ul class="item-sub">
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/18488" target="_blank">для РФ — CloudPayments</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/23955" target="_blank">для Казахстана — Tip Top</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/online-cloudpayments" target="_blank">для РФ — CloudPayments</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/online-yookassa-apply" target="_blank">для РФ — ЮKassa</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/online-yandexpay-apply" target="_blank">для РФ — Яндекс Пэй</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/online-tiptop" target="_blank">для Казахстана — Tip Top</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/online-atmos" target="_blank">для Узбекистана — ATMOS</a></li>
         </ul>
       </div></li>
 
@@ -402,13 +412,13 @@ body.focus .focus-hint::before{content:"🔗";}
     <div class="block-h"><span class="dot">+</span><h3>Дополнительно на тарифах Standard и Pro</h3></div>
     <ul class="items">
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/28943" target="_blank"><span class="item-text">Подключение Fitbase Chat</span></a><span class="tag pro">Standard / Pro</span>
+        <a class="item-link arw" href="https://help.fitbase.io/a/messages-chat-connect" target="_blank"><span class="item-text">Подключение Fitbase Chat</span></a><span class="tag pro">Standard / Pro</span>
       </div></li>
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16705" target="_blank"><span class="item-text">Приложение тренера</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/staff-coach-app-login" target="_blank"><span class="item-text">Приложение тренера</span></a>
       </div></li>
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/21406" target="_blank"><span class="item-text">Бот аналитики Fitbase</span></a><span class="tag pro">Pro</span>
+        <a class="item-link arw" href="https://help.fitbase.io/a/reports-analyst-bot" target="_blank"><span class="item-text">Бот аналитики Fitbase</span></a><span class="tag pro">Pro</span>
         <div class="item-note">Владелец и управляющий держат руку на пульсе — сводные данные по ключевым показателям приходят в Telegram.</div>
       </div></li>
     </ul>
@@ -433,34 +443,34 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <ul class="items">
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16813" target="_blank"><span class="item-text">Шаг 1. Создайте шаблоны занятий</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/schedule-template" target="_blank"><span class="item-text">Шаг 1. Создайте шаблоны занятий</span></a>
         <div class="item-note">Обязательно внесите медиафайлы — так приложение выглядит красиво, а клиенты видят описание тренировок и как они проходят.</div>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16814" target="_blank"><span class="item-text">Шаг 2. Настройте сетку расписания</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/schedule-add-group" target="_blank"><span class="item-text">Шаг 2. Настройте сетку расписания</span></a>
         <ul class="item-sub">
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/8860" target="_blank">как работать в сетке расписания</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/8850" target="_blank">карточка занятия и статусы записи клиента</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/9973" target="_blank">что такое секционная запись</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/schedule-grid" target="_blank">как работать в сетке расписания</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/schedule-card" target="_blank">карточка занятия и статусы записи клиента</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/schedule-section" target="_blank">что такое секционная запись</a></li>
         </ul>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/3817" target="_blank"><span class="item-text">Шаг 3. Автоматическая работа расписания по записям клиентов</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/schedule-auto" target="_blank"><span class="item-text">Шаг 3. Автоматическая работа расписания по записям клиентов</span></a>
         <div class="item-note">Автоматизирует процессы по записям и снижает нагрузку на администратора.</div>
       </div></li>
 
       <li class="item"><div class="item-body">
         <div class="item-text">Шаг 4. Аренда зала <span class="tag opt">если применимо</span></div>
         <ul class="item-sub">
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/28803" target="_blank">настройте аренду</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/28568" target="_blank">как работать с записью на аренду</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/app-rent-setup" target="_blank">настройте аренду</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/app-rent-booking" target="_blank">как работать с записью на аренду</a></li>
         </ul>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/4902" target="_blank"><span class="item-text">Шаг 5. Как работать с записью на персональные занятия</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/schedule-personal" target="_blank"><span class="item-text">Шаг 5. Как работать с записью на персональные занятия</span></a>
       </div></li>
     </ul>
   </div>
@@ -482,22 +492,22 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <ul class="items">
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16061" target="_blank"><span class="item-text">Шаг 1. Структура доходов</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/price-structure" target="_blank"><span class="item-text">Шаг 1. Структура доходов</span></a>
         <div class="item-note">Помогает корректно распределять абонементы и услуги в магазине — для клиента и для внутренней отчётности.</div>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16064" target="_blank"><span class="item-text">Шаг 2. Создайте шаблоны абонементов</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/price-sub-create" target="_blank"><span class="item-text">Шаг 2. Создайте шаблоны абонементов</span></a>
         <div class="item-note">Абонементы используются для оплаты и посещения групповых занятий.</div>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16066" target="_blank"><span class="item-text">Шаг 3. Создайте шаблоны услуг</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/price-service-create" target="_blank"><span class="item-text">Шаг 3. Создайте шаблоны услуг</span></a>
         <div class="item-note">Услуги — для оплаты и посещения персональных тренировок. Для расчёта зарплаты тренерам за групповые в виде % от услуги создавайте пакеты услуг.</div>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/6854" target="_blank"><span class="item-text">Шаг 4. Создайте шаблоны товаров</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/price-goods-add" target="_blank"><span class="item-text">Шаг 4. Создайте шаблоны товаров</span></a>
         <div class="item-note">Заполните, если продаёте товары клиентам и хотите вести учёт в Fitbase.<span class="tag opt">если применимо</span></div>
       </div></li>
     </ul>
@@ -521,30 +531,30 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <div class="block-h"><span class="dot">1</span><h3>Настройте кассы</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3806" target="_blank"><span class="item-text">Как добавить кассы</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/5116" target="_blank"><span class="item-text">Как работать с кассой</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/26881" target="_blank"><span class="item-text">Как настроить кастомные типы оплаты</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-cashbox-add" target="_blank"><span class="item-text">Как добавить кассы</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-cashbox" target="_blank"><span class="item-text">Как работать с кассой</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-payment-methods" target="_blank"><span class="item-text">Как настроить кастомные типы оплаты</span></a></div></li>
     </ul>
   </div>
 
   <div class="block">
     <div class="block-h"><span class="dot">2</span><h3>Продажи и действия с абонементом</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/4906" target="_blank"><span class="item-text">Оформление продажи</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3818" target="_blank"><span class="item-text">Оформление внутренней рассрочки</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3816" target="_blank"><span class="item-text">Оформление возврата клиенту</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3820" target="_blank"><span class="item-text">Переоформление абонемента на другого клиента</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/23889" target="_blank"><span class="item-text">Как отправить клиенту ссылку на онлайн-оплату</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-sell" target="_blank"><span class="item-text">Оформление продажи</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-installment" target="_blank"><span class="item-text">Оформление внутренней рассрочки</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-refund" target="_blank"><span class="item-text">Оформление возврата клиенту</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/clients-subscription-actions#oformit-na-drugogo-klienta" target="_blank"><span class="item-text">Переоформление абонемента на другого клиента</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/online-link" target="_blank"><span class="item-text">Как отправить клиенту ссылку на онлайн-оплату</span></a></div></li>
     </ul>
   </div>
 
   <div class="block">
     <div class="block-h"><span class="dot">3</span><h3>Основные отчёты по продажам</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/12878" target="_blank"><span class="item-text">Отчёт по продажам</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/7885" target="_blank"><span class="item-text">Отчёт по продлению</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/21133" target="_blank"><span class="item-text">Прогноз продления</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/6852" target="_blank"><span class="item-text">Отчёт движения ДДС</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-sales" target="_blank"><span class="item-text">Отчёт по продажам</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-renewals" target="_blank"><span class="item-text">Отчёт по продлению</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-renewal-forecast" target="_blank"><span class="item-text">Прогноз продления</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-cash" target="_blank"><span class="item-text">Отчёт движения ДДС</span></a></div></li>
     </ul>
   </div>
 
@@ -565,16 +575,16 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <ul class="items">
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/3856" target="_blank"><span class="item-text">Как создать клиента</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/clients-create" target="_blank"><span class="item-text">Как создать клиента</span></a>
         <ul class="item-sub">
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/16704" target="_blank">обзор карточки клиента</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/3807" target="_blank">статусы клиентов</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/24069" target="_blank">массовые действия с клиентами</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/22781" target="_blank">как работать с подопечными</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/clients-card" target="_blank">обзор карточки клиента</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/clients-statuses" target="_blank">статусы клиентов</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/clients-mass-actions" target="_blank">массовые действия с клиентами</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/clients-create#rebenok" target="_blank">как работать с подопечными</a></li>
         </ul>
       </div></li>
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/3811" target="_blank"><span class="item-text">Работа с разделом «Ресепшн»</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/reception-entry" target="_blank"><span class="item-text">Работа с разделом «Ресепшн»</span></a>
         <div class="item-note">При наличии пропускной системы или процесса ручной отметки клиента.</div>
       </div></li>
     </ul>
@@ -584,15 +594,15 @@ body.focus .focus-hint::before{content:"🔗";}
     <div class="block-h"><span class="dot">+</span><h3>Дополнительно</h3></div>
     <ul class="items">
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/22869" target="_blank"><span class="item-text">Шаблоны договоров</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/clients-contract" target="_blank"><span class="item-text">Шаблоны договоров</span></a>
         <div class="item-note">Для быстрой и удобной печати договора при продаже абонемента или услуги.</div>
       </div></li>
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/23809" target="_blank"><span class="item-text">Подписание договора по СМС</span></a><span class="tag pro">Pro</span>
+        <a class="item-link arw" href="https://help.fitbase.io/a/messages-sms-sign" target="_blank"><span class="item-text">Подписание договора по СМС</span></a><span class="tag pro">Pro</span>
         <div class="item-note">Уход от бумажной работы — сокращает время на подписание договора с клиентом.</div>
       </div></li>
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/25685" target="_blank"><span class="item-text">Интеграция с Fitbase Click</span></a><span class="tag pro">Pro</span>
+        <a class="item-link arw" href="https://help.fitbase.io/a/reception-click" target="_blank"><span class="item-text">Интеграция с Fitbase Click</span></a><span class="tag pro">Pro</span>
         <div class="item-note">Если нет СКУД — автоматизирует вход и отметку клиента на занятии, снимая часть нагрузки с администратора.</div>
       </div></li>
     </ul>
@@ -614,13 +624,13 @@ body.focus .focus-hint::before{content:"🔗";}
 
   <div class="block">
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/10948" target="_blank"><span class="item-text">Настройка личного кабинета клиента</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/28827" target="_blank"><span class="item-text">Настройка и размещение виджета расписания</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/app-widget-cabinet" target="_blank"><span class="item-text">Настройка личного кабинета клиента</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/app-widget-schedule" target="_blank"><span class="item-text">Настройка и размещение виджета расписания</span></a></div></li>
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/4014" target="_blank"><span class="item-text">Настройте и оформите мобильное приложение под себя</span></a>
-        <ul class="item-sub"><li><a class="item-link arw" href="https://help.fitbase.io/article/29232" target="_blank">настройка авторизации в приложении и виджете</a></li></ul>
+        <a class="item-link arw" href="https://help.fitbase.io/a/app-settings" target="_blank"><span class="item-text">Настройте и оформите мобильное приложение под себя</span></a>
+        <ul class="item-sub"><li><a class="item-link arw" href="https://help.fitbase.io/a/app-login-methods" target="_blank">настройка авторизации в приложении и виджете</a></li></ul>
       </div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/27922" target="_blank"><span class="item-text">Проверьте себя по чек-листу готовности приложения</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/app-checklist" target="_blank"><span class="item-text">Проверьте себя по чек-листу готовности приложения</span></a></div></li>
     </ul>
   </div>
 
@@ -641,28 +651,28 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <div class="block-h"><span class="dot">1</span><h3>Заявки</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3995" target="_blank"><span class="item-text">Как работать с разделом «Заявки»</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/16809" target="_blank"><span class="item-text">Создание причин отказа</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/26863" target="_blank"><span class="item-text">Гид по триггерам</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/leads-overview" target="_blank"><span class="item-text">Как работать с разделом «Заявки»</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/leads-funnel-settings" target="_blank"><span class="item-text">Создание причин отказа</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/automation-triggers" target="_blank"><span class="item-text">Гид по триггерам</span></a></div></li>
     </ul>
   </div>
 
   <div class="block">
     <div class="block-h"><span class="dot">2</span><h3>Маркетинговые инструменты</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/16442" target="_blank"><span class="item-text">Как создать промокод</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/4815" target="_blank"><span class="item-text">Настройка акции «Приведи друга»</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/4905" target="_blank"><span class="item-text">Бонусы и депозит клиента</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/8049" target="_blank"><span class="item-text">Начисление кешбэка</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/24068" target="_blank"><span class="item-text">Push-рассылки</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/27924" target="_blank"><span class="item-text">Рассылки через Fitbase Chat</span></a><span class="tag pro">Standard / Pro</span></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-promocode" target="_blank"><span class="item-text">Как создать промокод</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/app-refer" target="_blank"><span class="item-text">Настройка акции «Приведи друга»</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-deposit" target="_blank"><span class="item-text">Бонусы и депозит клиента</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/app-cashback-auto" target="_blank"><span class="item-text">Начисление кешбэка</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/messages-bulk" target="_blank"><span class="item-text">Push-рассылки</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/messages-bulk" target="_blank"><span class="item-text">Рассылки через Fitbase Chat</span></a><span class="tag pro">Standard / Pro</span></div></li>
     </ul>
   </div>
 
   <div class="block">
     <div class="block-h"><span class="dot">3</span><h3>Отчётность</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/11124" target="_blank"><span class="item-text">Отчётность маркетинга</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-marketing" target="_blank"><span class="item-text">Отчётность маркетинга</span></a></div></li>
     </ul>
   </div>
 
@@ -683,15 +693,15 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <div class="block-h"><span class="dot">1</span><h3>Заявки</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3995" target="_blank"><span class="item-text">Как работать с разделом «Заявки»</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/5643" target="_blank"><span class="item-text">Как настроить рекламные источники</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/16809" target="_blank"><span class="item-text">Создание причины отказа</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/leads-overview" target="_blank"><span class="item-text">Как работать с разделом «Заявки»</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/leads-sources" target="_blank"><span class="item-text">Как настроить рекламные источники</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/leads-funnel-settings" target="_blank"><span class="item-text">Создание причины отказа</span></a></div></li>
       <li class="item"><div class="item-body">
         <div class="item-text">Как принимать заявки из разных источников</div>
         <ul class="item-sub">
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/18157" target="_blank">парсер почты</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/14030" target="_blank">сбор заявок из ВК</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/27124" target="_blank">лиды из Facebook</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/leads-email-parser" target="_blank">парсер почты</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/leads-vk" target="_blank">сбор заявок из ВК</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/leads-facebook" target="_blank">лиды из Facebook</a></li>
         </ul>
       </div></li>
     </ul>
@@ -700,11 +710,11 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <div class="block-h"><span class="dot">2</span><h3>Задачи</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/20094" target="_blank"><span class="item-text">Как создать задачи</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/20094" target="_blank"><span class="item-text">Работа с задачами</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/20097" target="_blank"><span class="item-text">Фильтры в разделе «Задачи»</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/25681" target="_blank"><span class="item-text">Результаты задач</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/18313" target="_blank"><span class="item-text">Автоматические задачи и автодействия</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/automation-task-create" target="_blank"><span class="item-text">Как создать задачи</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/automation-task-create" target="_blank"><span class="item-text">Работа с задачами</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/automation-task-filters" target="_blank"><span class="item-text">Фильтры в разделе «Задачи»</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/automation-task-templates" target="_blank"><span class="item-text">Результаты задач</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/automation-rules" target="_blank"><span class="item-text">Автоматические задачи и автодействия</span></a></div></li>
     </ul>
   </div>
 
@@ -725,24 +735,24 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <div class="block-h"><span class="dot">1</span><h3>Маркетинговые инструменты</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/21803" target="_blank"><span class="item-text">Справочник скидок</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/22782" target="_blank"><span class="item-text">Настройка сертификатов</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/16442" target="_blank"><span class="item-text">Как создать промокод</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/4815" target="_blank"><span class="item-text">Настройка акции «Приведи друга»</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/4905" target="_blank"><span class="item-text">Бонусы и депозит клиента</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/8049" target="_blank"><span class="item-text">Начисление кешбэка</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/22783" target="_blank"><span class="item-text">Группировка клиентов и сегментация</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/24068" target="_blank"><span class="item-text">Push-рассылки</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/27924" target="_blank"><span class="item-text">Рассылки через Fitbase Chat</span></a><span class="tag pro">Standard / Pro</span></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-discounts" target="_blank"><span class="item-text">Справочник скидок</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-certificates" target="_blank"><span class="item-text">Настройка сертификатов</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-promocode" target="_blank"><span class="item-text">Как создать промокод</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/app-refer" target="_blank"><span class="item-text">Настройка акции «Приведи друга»</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-deposit" target="_blank"><span class="item-text">Бонусы и депозит клиента</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/app-cashback-auto" target="_blank"><span class="item-text">Начисление кешбэка</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/clients-groups" target="_blank"><span class="item-text">Группировка клиентов и сегментация</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/messages-bulk" target="_blank"><span class="item-text">Push-рассылки</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/messages-bulk" target="_blank"><span class="item-text">Рассылки через Fitbase Chat</span></a><span class="tag pro">Standard / Pro</span></div></li>
     </ul>
   </div>
 
   <div class="block">
     <div class="block-h"><span class="dot">2</span><h3>Отчётность и автоматизация</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/11124" target="_blank"><span class="item-text">Отчётность маркетинга</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/27343" target="_blank"><span class="item-text">Интеграция с ВК-рекламой</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/26863" target="_blank"><span class="item-text">Расширенные триггеры по автоматизации</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-marketing" target="_blank"><span class="item-text">Отчётность маркетинга</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/leads-vk" target="_blank"><span class="item-text">Интеграция с ВК-рекламой</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/automation-triggers" target="_blank"><span class="item-text">Расширенные триггеры по автоматизации</span></a></div></li>
     </ul>
   </div>
 
@@ -763,21 +773,21 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <div class="block-h"><span class="dot">1</span><h3>СКУД-системы</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/11934" target="_blank"><span class="item-text">Sigur</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/11987" target="_blank"><span class="item-text">PocketKey</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/13109" target="_blank"><span class="item-text">AviTech</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/integrations-sigur" target="_blank"><span class="item-text">Sigur</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/integrations-pocketkey" target="_blank"><span class="item-text">PocketKey</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/integrations-avitech" target="_blank"><span class="item-text">AviTech</span></a></div></li>
     </ul>
   </div>
 
   <div class="block">
     <div class="block-h"><span class="dot">2</span><h3>Кассы, платежи и сервисы</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/18221" target="_blank"><span class="item-text">Интеграция с ККМ</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/21587" target="_blank"><span class="item-text">Честный знак</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/16984" target="_blank"><span class="item-text">Интеграция с сервисом Фитмост</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/22732" target="_blank"><span class="item-text">Рассрочка от Т-Банк</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/22778" target="_blank"><span class="item-text">Сервис «Долями»</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3819" target="_blank"><span class="item-text">IP-телефония</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-kkm-setup" target="_blank"><span class="item-text">Интеграция с ККМ</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/integrations-chestny-znak" target="_blank"><span class="item-text">Честный знак</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/integrations-fitmost" target="_blank"><span class="item-text">Интеграция с сервисом Фитмост</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/online-installment-setup" target="_blank"><span class="item-text">Рассрочка от Т-Банк</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/online-installment-setup" target="_blank"><span class="item-text">Сервис «Долями»</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/integrations-onlinepbx" target="_blank"><span class="item-text">IP-телефония</span></a></div></li>
     </ul>
   </div>
 
@@ -787,8 +797,8 @@ body.focus .focus-hint::before{content:"🔗";}
       <li class="item"><div class="item-body">
         <div class="item-text">Как организовать зал без персонала</div>
         <ul class="item-sub">
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/27901" target="_blank">инструкция, часть 1</a></li>
-          <li><a class="item-link arw" href="https://help.fitbase.io/article/27902" target="_blank">инструкция, часть 2</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/integrations-akuvox-prepare" target="_blank">инструкция, часть 1</a></li>
+          <li><a class="item-link arw" href="https://help.fitbase.io/a/integrations-akuvox-setup" target="_blank">инструкция, часть 2</a></li>
         </ul>
       </div></li>
     </ul>

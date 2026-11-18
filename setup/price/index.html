@@ -110,6 +110,12 @@ html,body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-fami
 .warn p{margin:0;font-size:13.5px;color:#A83A3A;}
 
 /* Ready-to-sell note */
+.tip{margin:8px 0 0;background:#EAF7F3;border:1.5px solid #A9E1D5;border-radius:12px;padding:11px 15px;}
+.tip-h{display:flex;align-items:center;gap:7px;font-weight:700;color:#147F68;margin:0 0 4px;font-size:12px;letter-spacing:.03em;text-transform:uppercase;}
+.tip-h::before{content:"📄";}
+.tip p{margin:0 0 6px;font-size:13.5px;color:#147F68;}
+.tip p:last-of-type{margin:0;}
+.tip a{color:#147F68;font-weight:700;text-decoration:underline;}
 .done-note{margin:6px 0 0;background:#EAF7F3;border:1.5px solid #A9E1D5;border-radius:14px;padding:14px 18px;color:#147F68;font-weight:600;font-size:14.5px;display:flex;gap:10px;align-items:center;}
 .done-note::before{content:"✓";display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;flex-shrink:0;}
 
@@ -295,22 +301,22 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <ul class="items">
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16061" target="_blank"><span class="item-text">Шаг 1. Структура доходов</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/price-structure" target="_blank"><span class="item-text">Шаг 1. Структура доходов</span></a>
         <div class="item-note">Помогает корректно распределять абонементы и услуги в магазине — для клиента и для внутренней отчётности.</div>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16064" target="_blank"><span class="item-text">Шаг 2. Создайте шаблоны абонементов</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/price-sub-create" target="_blank"><span class="item-text">Шаг 2. Создайте шаблоны абонементов</span></a>
         <div class="item-note">Абонементы используются для оплаты и посещения групповых занятий.</div>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/16066" target="_blank"><span class="item-text">Шаг 3. Создайте шаблоны услуг</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/price-service-create" target="_blank"><span class="item-text">Шаг 3. Создайте шаблоны услуг</span></a>
         <div class="item-note">Услуги — для оплаты и посещения персональных тренировок. Для расчёта зарплаты тренерам за групповые в виде % от услуги создавайте пакеты услуг.</div>
       </div></li>
 
       <li class="item"><div class="item-body">
-        <a class="item-link arw" href="https://help.fitbase.io/article/6854" target="_blank"><span class="item-text">Шаг 4. Создайте шаблоны товаров</span></a>
+        <a class="item-link arw" href="https://help.fitbase.io/a/price-goods-add" target="_blank"><span class="item-text">Шаг 4. Создайте шаблоны товаров</span></a>
         <div class="item-note">Заполните, если продаёте товары клиентам и хотите вести учёт в Fitbase.<span class="tag opt">если применимо</span></div>
       </div></li>
     </ul>

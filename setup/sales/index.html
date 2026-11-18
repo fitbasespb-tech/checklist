@@ -110,6 +110,12 @@ html,body{margin:0;padding:0;background:var(--canvas);color:var(--ink);font-fami
 .warn p{margin:0;font-size:13.5px;color:#A83A3A;}
 
 /* Ready-to-sell note */
+.tip{margin:8px 0 0;background:#EAF7F3;border:1.5px solid #A9E1D5;border-radius:12px;padding:11px 15px;}
+.tip-h{display:flex;align-items:center;gap:7px;font-weight:700;color:#147F68;margin:0 0 4px;font-size:12px;letter-spacing:.03em;text-transform:uppercase;}
+.tip-h::before{content:"📄";}
+.tip p{margin:0 0 6px;font-size:13.5px;color:#147F68;}
+.tip p:last-of-type{margin:0;}
+.tip a{color:#147F68;font-weight:700;text-decoration:underline;}
 .done-note{margin:6px 0 0;background:#EAF7F3;border:1.5px solid #A9E1D5;border-radius:14px;padding:14px 18px;color:#147F68;font-weight:600;font-size:14.5px;display:flex;gap:10px;align-items:center;}
 .done-note::before{content:"✓";display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--green);color:#fff;font-weight:800;flex-shrink:0;}
 
@@ -295,30 +301,30 @@ body.focus .focus-hint::before{content:"🔗";}
   <div class="block">
     <div class="block-h"><span class="dot">1</span><h3>Настройте кассы</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3806" target="_blank"><span class="item-text">Как добавить кассы</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/5116" target="_blank"><span class="item-text">Как работать с кассой</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/26881" target="_blank"><span class="item-text">Как настроить кастомные типы оплаты</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-cashbox-add" target="_blank"><span class="item-text">Как добавить кассы</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-cashbox" target="_blank"><span class="item-text">Как работать с кассой</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-payment-methods" target="_blank"><span class="item-text">Как настроить кастомные типы оплаты</span></a></div></li>
     </ul>
   </div>
 
   <div class="block">
     <div class="block-h"><span class="dot">2</span><h3>Продажи и действия с абонементом</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/4906" target="_blank"><span class="item-text">Оформление продажи</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3818" target="_blank"><span class="item-text">Оформление внутренней рассрочки</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3816" target="_blank"><span class="item-text">Оформление возврата клиенту</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/3820" target="_blank"><span class="item-text">Переоформление абонемента на другого клиента</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/23889" target="_blank"><span class="item-text">Как отправить клиенту ссылку на онлайн-оплату</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-sell" target="_blank"><span class="item-text">Оформление продажи</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-installment" target="_blank"><span class="item-text">Оформление внутренней рассрочки</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/sales-refund" target="_blank"><span class="item-text">Оформление возврата клиенту</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/clients-subscription-actions#oformit-na-drugogo-klienta" target="_blank"><span class="item-text">Переоформление абонемента на другого клиента</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/online-link" target="_blank"><span class="item-text">Как отправить клиенту ссылку на онлайн-оплату</span></a></div></li>
     </ul>
   </div>
 
   <div class="block">
     <div class="block-h"><span class="dot">3</span><h3>Основные отчёты по продажам</h3></div>
     <ul class="items">
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/12878" target="_blank"><span class="item-text">Отчёт по продажам</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/7885" target="_blank"><span class="item-text">Отчёт по продлению</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/21133" target="_blank"><span class="item-text">Прогноз продления</span></a></div></li>
-      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/article/6852" target="_blank"><span class="item-text">Отчёт движения ДДС</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-sales" target="_blank"><span class="item-text">Отчёт по продажам</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-renewals" target="_blank"><span class="item-text">Отчёт по продлению</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-renewal-forecast" target="_blank"><span class="item-text">Прогноз продления</span></a></div></li>
+      <li class="item"><div class="item-body"><a class="item-link arw" href="https://help.fitbase.io/a/reports-cash" target="_blank"><span class="item-text">Отчёт движения ДДС</span></a></div></li>
     </ul>
   </div>
 
